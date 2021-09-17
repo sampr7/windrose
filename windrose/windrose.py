@@ -218,6 +218,8 @@ class WindroseAxes(PolarAxes):
             fmt = "[%." + _decimal_places + "f " + ": %0." + _decimal_places + "f"
 
             labels = np.copy(self._info["bins"])
+            labels[-1] = np.nan
+            last_dig = labels[-2]
             if locale.getlocale()[0] in ["fr_FR"]:
                 fmt += "["
             else:
@@ -227,6 +229,7 @@ class WindroseAxes(PolarAxes):
                 fmt += ' ' + units
 
             labels = [fmt % (labels[i], labels[i + 1]) for i in range(len(labels) - 1)]
+            labels[-1] = '>'+str(last_dig)
             return labels
 
         kwargs.pop("labels", None)
